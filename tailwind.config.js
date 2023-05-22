@@ -6,8 +6,14 @@ export default {
   ],
   theme: {
     extend: {
-      animation: {
-        'spin-slow': 'spin 3s linear infinite',
+      keyframes: {
+        fadeDown: {
+          '0%, 100%': { transform: 'height(0px)' },
+          '50%': { transform: 'height(100pxx)' },
+        },
+        animation: {
+          fadeDown: 'fadeDown 1s ease-in-out infinite',
+        }
       }
     }
   },
