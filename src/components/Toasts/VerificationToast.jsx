@@ -1,10 +1,21 @@
+import { toast } from "react-hot-toast"
+import {deleteImage} from "../../../Firebase"
+
+
 /* TERMINAR DE CONFIGURAR LA TOAST */
 export default function VerificationToast (props) {
-  const {t,deleteImgFunction} = {...props}
+  const {t,getData, result, book, array} = {...props}
   
- 
+  const deleteImgFunction  = async (e,img,book,array,option,id)=>{
+    e.preventDefault()
+      console.log(option)
+      if(option){
+        deleteImage(img,book,array)
+        getData()
+      }
+      toast.dismiss(id)
+  }
   
-
   return(
 
     <>{
@@ -19,8 +30,8 @@ export default function VerificationToast (props) {
           <div className=' text-black justify-between items-center'>
             <p className='text-xl mb-2'>¿Deseas eliminar esta imagen?</p>
             <div className='flex justify-around items-center'>
-              <button className='text-sm border-2 border-red-500 p-2 rounded-md w-14' onClick={()=>deleteImgFunction()}>Si</button>
-              <button className='text-sm border-2 border-red-500 p-2 rounded-md w-14' onClick={()=>deleteImgFunction()}>No</button>
+              <button className='text-sm border-2 border-red-500 p-2 rounded-md w-14' onClick={(e)=>deleteImgFunction(e,result,book,array,true,t.id)}>Si</button>
+              <button className='text-sm border-2 border-red-500 p-2 rounded-md w-14' onClick={(e)=>deleteImgFunction(e,result,book,array,false,t.id)}>No</button>
             </div>
 
           </div>

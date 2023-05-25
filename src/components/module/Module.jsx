@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Toaster, toast }  from "react-hot-toast"
 
-import {deleteImage,deleteBook} from "../../../Firebase"
 import VerificationToast from "../Toasts/VerificationToast"
+import VerificationOfBook from "../Toasts/VerificationOfBook"
 export default function Module(props) {
     const {BooksOnDB,getData,setFile,setBooksOnUpload} = {...props}
     const [classOfPics, setClassOfPics] = useState("opacity-0 hidden")
@@ -18,11 +18,7 @@ export default function Module(props) {
         setClassOfPics("opacity-0 hidden")
         setWhoMod("")
     }
-    const deleteImgFunction  = async (e,img,book,array)=>{
-        e.preventDefault()
-          deleteImage(img,book,array)
-          getData()
-    }
+    
     const setImageAndBook = (img,book)=>{
         setFile(img)
         setBooksOnUpload(book)
@@ -31,11 +27,7 @@ export default function Module(props) {
         
     }
 
-    const deleteBookOnDB = (e,book) =>{
-        e.preventDefault()
-        deleteBook(book)
-        getData()
-    } 
+   
 
     /* Terminar la integracion de react hot toast */
 
@@ -59,7 +51,7 @@ export default function Module(props) {
                     )
                     }  
                 </div>
-                <button className="text-3xl justify-center items-center flex hover:text-red-500 transition mx-4 group hover:bg-pink-100 p-2 rounded-md "><ion-icon name="trash-outline"></ion-icon><p className="text-sm opacity-0 group-hover:opacity-100 mx-2 "onClick={(e)=>{deleteBookOnDB(e,book.bookName)}}>Borrar book</p></button>
+                <button className="text-3xl justify-center items-center flex hover:text-red-500 transition mx-4 group hover:bg-pink-100 p-2 rounded-md  cursor-default"><ion-icon aria-hidden = "favorte" name="trash-outline"></ion-icon><p className=" cursor-pointer text-sm opacity-0 group-hover:opacity-100 mx-2 " onClick={(e)=>{e.preventDefault() ,toast.custom((t) => (<VerificationOfBook book={book.bookName} getData={getData} t={t}  />)) } } >Borrar book</p></button>
               </div>
 
               
@@ -72,7 +64,7 @@ export default function Module(props) {
                         /* Hacer animacion fade in para las imagenes */
                         <div className={`relative mx-2 transition-all duration-700  ${WhoMod == book.bookName ? "opacity-100":"opacity-0"} `} key={img.img.result}>
                           <img className="w-40 h-40 rounded-md mx-2 border-2 border-pink-100 " src={img.img.result} alt={img.result} />
-                              <button  onClick={(e)=>toast.custom((t) => (<VerificationToast t={t} deleteImgFunction={deleteImgFunction(e,img.img.result,book.bookName,book.imgs.book)} />))  } className="w-40 h-40 rounded-md mx-2  absolute opacity-0 top-0 left-0 flex justify-center items-center text-5xl duration-500 transition-all hover:bg-[#ff00007d] hover:opacity-100"><ion-icon name="trash-outline"></ion-icon> </button>
+                              <button onClick={(e)=>{e.preventDefault(),toast.custom((t) => (<VerificationToast result={img.img.result} book={book.bookName} array={book.imgs.book} getData={getData} t={t}  />)) } } className="w-40 h-40 rounded-md mx-2  absolute opacity-0 top-0 left-0 flex justify-center items-center text-5xl duration-500 transition-all hover:bg-[#ff00007d] hover:opacity-100"><ion-icon name="trash-outline"></ion-icon> </button>
                         </div>
                     )})}            
                         <div  className={classOfPics} onClick={()=>{document.querySelector(`#${book.bookName.split(' ').join('')}` ).click()}}>

@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDownloadURL, getStorage,ref,uploadBytes} from "firebase/storage";
 import {  arrayUnion, deleteDoc, doc, getDoc, getFirestore, setDoc, updateDoc,} from "firebase/firestore";
+import { getAuth, GoogleAuthProvider } from "firebase/auth"
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_REACT_APP_APIKEY,
     authDomain: import.meta.env.VITE_REACT_APP_AUTH_DOMAIN,
@@ -13,13 +14,15 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app)
 export const storage = getStorage(app)
+export const auth = getAuth()
+auth.useDeviceLanguage()
+export const googleProvider = new GoogleAuthProvider()
+
 
 //Esta funcion sirve para subir imgs, recibe un archivo y el nombre de la foto
 export const uploadFile = async (file) => {
-    console.log(file)
     const storageRef = ref(storage, file.name)
-    await uploadBytes(storageRef, file).then(snapshot => console.log(snapshot) )
-  
+    await uploadBytes(storageRef, file).then(snapshot => console.log(snapshot) ) 
     //getDownloadURL retorna la url que utilizara la img en el storage para verse
     const url = await getDownloadURL(storageRef)
     return url
@@ -28,7 +31,6 @@ export const uploadFile = async (file) => {
 /* AGREGAR REACT HOT TOAST A LA APLICACION */
 
 export const uploadData = async (book,img) =>{
-  console.log("book,img")
   const myRef = doc(db,"books",book)
   await getDoc(myRef).then(docSnap=>{
       if (docSnap.exists()) {

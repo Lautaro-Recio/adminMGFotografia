@@ -6,6 +6,13 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        'menuGray': '#222222c4',
+        
+      },
+      backgroundImage: {
+        "backgroundSignIn":"url('/src/assets/fondo.jpg')"
+      },
       keyframes: {
         fadeDown: {
           '0%, 100%': { transform: 'height(0px)' },
