@@ -20,7 +20,7 @@ export default function SignInWithGoogle(props) {
         
       <button className='flex justify-center space-x-2 items-center w-full h-10 bg-[#222222a6]  border-2 border-[#222222a6] text-gray-400 p-6 rounded-lg' onClick={SignWhitGoogle}>
           <ion-icon size="large" name="logo-google"></ion-icon>
-          <p className='text-black'>SigIn With Google</p>
+          <p className='text-black text-xl '>SigIn With Google</p>
       </button>
     </div>
   )

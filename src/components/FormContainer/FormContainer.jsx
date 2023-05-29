@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import {uploadFile, db,uploadData} from "../../../Firebase"
 import { collection, getDocs } from "firebase/firestore"
 import Module from "../../components/module/Module"
+import logo from "../../assets/logo.png"
+import NewBook from "../module/NewBook"
+import 'flowbite';
 export default function FormContainer() {
   const [File, setFile] = useState("")
   const [BooksOnDB, setBooksOnDB] = useState([])
@@ -22,6 +25,13 @@ export default function FormContainer() {
         console.error(error)
     }
   }
+
+  const reset = (e)=>{
+    e.preventDefault()
+    setFile()
+    setBooksOnUpload()
+    setAddNewBook()
+  }
   useEffect(() => {
     getData()
   }, [])
@@ -39,6 +49,7 @@ export default function FormContainer() {
       !File && await uploadData(BooksOnUpload)
       File && await uploadData(BooksOnUpload,img)
       getData()
+      reset()
     } catch (error){
       console.error(error)
       alert("fallo al subir, intente mas tarde")
@@ -47,34 +58,34 @@ export default function FormContainer() {
   
 
   return (
-    <div className="text-white bg-pink-300 border-[1px] rounded-xl p-4  border-pink-200 m-2">
-      <h4 className="text-xl text-white">Formulario subida de imgs</h4>
+    <>
+    <div className="text-white bg-formGray border-[1px] rounded-xl p-4  border-borderGray m-2 h-[97vh]">
+      <div className="flex justify-center items-center ">
+        <img className="w-26 h-20 mx-4" src={logo} alt="" />
+      </div>
+        <h4 className="text-xl text-white">Formulario subida de imagenes</h4>
       <form className="block " >
         <div className=" my-4 p-2 rounded-md ">
-          <h4 className="text-white">Selecciona</h4>  
+          <h4 className="text-white ml-6 text-xl">Selecciona un book</h4>  
           {BooksOnDB.length > 0 && 
             <Module BooksOnDB={BooksOnDB} getData={getData} setFile={setFile} setBooksOnUpload={setBooksOnUpload} />
           }
-          <div className="flex mb-2">
-            <p>Quieres agregar un nuvevo book?</p>
-            <input disabled={BooksOnUpload && true} className="ml-2 text-black" type="checkbox" name="" value="" onClick={()=>setAddNewBook(true)} id="" />
-          </div>
-
-          {addNewBook &&
-            <label htmlFor="">
-               Agregar nuevo Book
-              <input className="rounded-md ml-2 text-black p-2" type="text" onChange={e => {setBooksOnUpload(e.target.value)}}/>
-            </label>
-          }
+          <NewBook BooksOnUpload={BooksOnUpload} addNewBook={addNewBook} setAddNewBook={setAddNewBook} setBooksOnUpload={setBooksOnUpload}/>
         </div>
       
         <div className="flex justify-around items-center my-4">
-          <button className="border-2 border-pink-200 p-2 rounded-md w-20" onClick={(e)=>handleSubmit(e)}>Upload</button>
-          <button className="border-2 border-pink-200 p-2 rounded-md w-20">Reset</button>
+          <button className="border-2 border-borderGrayp-2 p-2 hover:bg-Gray transitio-all duration-500 rounded-md w-20" onClick={(e)=>handleSubmit(e)}>Upload</button>
+          <button className="border-2 border-borderGrayp-2 p-2 hover:bg-Gray transitio-all duration-500 rounded-md w-20" onClick={(e)=>reset(e)}>Reset</button>
         </div>
       </form>
 
 
     </div>
+
+    
+
+
+    </>
+
   )
 }
