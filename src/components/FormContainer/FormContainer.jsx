@@ -4,8 +4,11 @@ import { collection, getDocs } from "firebase/firestore"
 import Module from "../../components/module/Module"
 import logo from "../../assets/logo.png"
 import NewBook from "../module/NewBook"
-import 'flowbite';
-export default function FormContainer() {
+import SignOut from "../SignIn/SignOut"
+
+export default function FormContainer(props) {
+  const {SignOutGoogle} = {...props}
+
   const [File, setFile] = useState("")
   const [BooksOnDB, setBooksOnDB] = useState([])
   const [BooksOnUpload, setBooksOnUpload] = useState("")
@@ -48,20 +51,20 @@ export default function FormContainer() {
 
       !File && await uploadData(BooksOnUpload)
       File && await uploadData(BooksOnUpload,img)
-      getData()
-      reset()
+      await getData()
+      reset(e)
     } catch (error){
       console.error(error)
       alert("fallo al subir, intente mas tarde")
     }   
   }
   
-
   return (
     <>
-    <div className="text-white bg-formGray border-[1px] rounded-xl p-4  border-borderGray m-2 h-[97vh]">
-      <div className="flex justify-center items-center ">
+    <div className="text-white bg-formGray border-[1px] rounded-xl p-4  border-borderGray m-2 h-full">
+      <div className="flex justify-around items-center ">
         <img className="w-26 h-20 mx-4" src={logo} alt="" />
+        <SignOut SignOutGoogle={SignOutGoogle}/>
       </div>
         <h4 className="text-xl text-white">Formulario subida de imagenes</h4>
       <form className="block " >

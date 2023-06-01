@@ -15,10 +15,8 @@ export default function SignInWithGoogle(props) {
 
   return (
     <div className="items-center bg-[#a8a8a8a6] justify-center grid border-2  border-menuGray p-4 rounded-md">
-      
       <img src={logo} className="h-[65%] border-2 rounded-[100%] border-menuGray p-8 m-8" alt="Logo mg" />
-        
-      <button className='flex justify-center space-x-2 items-center w-full h-10 bg-[#222222a6]  border-2 border-[#222222a6] text-gray-400 p-6 rounded-lg' onClick={SignWhitGoogle}>
+      <button className='flex justify-center space-x-2 items-center w-full h-10 bg-[#222222a6]  border-2 border-[#222222a6] text-gray-400 p-6 rounded-lg hover:bg-borderGray transition-all' onClick={SignWhitGoogle}>
           <ion-icon size="large" name="logo-google"></ion-icon>
           <p className='text-black text-xl '>SigIn With Google</p>
       </button>
