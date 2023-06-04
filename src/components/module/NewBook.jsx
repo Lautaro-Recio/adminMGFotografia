@@ -2,7 +2,6 @@ export default function NewBook(props) {
   const { BooksOnUpload, addNewBook, setAddNewBook, setBooksOnUpload } = {
     ...props,
   };
-
   return (
     <>
       <div className="flex mb-2">
@@ -19,7 +18,6 @@ export default function NewBook(props) {
           id=""
         />
       </div>
-
       {addNewBook && (
         <label htmlFor="">
           Agregar nuevo Book

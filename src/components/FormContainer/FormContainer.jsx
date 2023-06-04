@@ -5,15 +5,14 @@ import Module from "../../components/module/Module";
 import logo from "../../assets/logo.png";
 import NewBook from "../module/NewBook";
 import SignOut from "../SignIn/SignOut";
-
+import { Toaster, toast } from "react-hot-toast";
+import ButtonsOfForm from "./ButtonsOfForm"
 export default function FormContainer(props) {
   const { SignOutGoogle } = { ...props };
-
   const [File, setFile] = useState("");
   const [BooksOnDB, setBooksOnDB] = useState([]);
   const [BooksOnUpload, setBooksOnUpload] = useState("");
   const [addNewBook, setAddNewBook] = useState(false);
-
   const getData = async () => {
     const dbCollection = await getDocs(collection(db, "books"));
     try {
@@ -27,39 +26,43 @@ export default function FormContainer(props) {
       console.error(error);
     }
   };
-
   const reset = (e) => {
     e.preventDefault();
     setFile();
     setBooksOnUpload();
     setAddNewBook();
+    toast.success('Formulario Reseteado')
   };
   useEffect(() => {
     getData();
   }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const result = File && (await uploadFile(File));
+      const newDate = new Date()
+      const date = newDate.getDate()
+      const month = newDate.getMonth()
+      const FullYear = newDate.getFullYear()
+      const DateToDB = `${date}/${month}/${FullYear}`
       const img = {
         result,
-        name: "Hola",
+        DateToDB
       };
-
       !File && (await uploadData(BooksOnUpload));
       File && (await uploadData(BooksOnUpload, img));
       await getData();
       reset(e);
+      toast.success('Informacion actualizada!')
     } catch (error) {
       console.error(error);
-      alert("fallo al subir, intente mas tarde");
+      toast.error("Fallo al subir, intente mas tarde");
+
     }
   };
-
   return (
     <>
-      <div className="text-white bg-formGray border-[1px] rounded-xl p-4  border-borderGray m-2 h-full">
+      <div className="text-white bg-formGray border-[1px] md:rounded-xl rounded-none p-4  border-borderGray md:m-2  h-full">
         <div className="flex justify-around items-center ">
           <img className="w-26 h-20 mx-4" src={logo} alt="" />
           <SignOut SignOutGoogle={SignOutGoogle} />
@@ -83,23 +86,10 @@ export default function FormContainer(props) {
               setBooksOnUpload={setBooksOnUpload}
             />
           </div>
-
-          <div className="flex justify-around items-center my-4">
-            <button
-              className="border-2 border-borderGrayp-2 p-2 hover:bg-Gray transitio-all duration-500 rounded-md w-20"
-              onClick={(e) => handleSubmit(e)}
-            >
-              Upload
-            </button>
-            <button
-              className="border-2 border-borderGrayp-2 p-2 hover:bg-Gray transitio-all duration-500 rounded-md w-20"
-              onClick={(e) => reset(e)}
-            >
-              Reset
-            </button>
-          </div>
+          <ButtonsOfForm handleSubmit={handleSubmit} reset={reset}/>
         </form>
       </div>
+      <Toaster />
     </>
   );
 }

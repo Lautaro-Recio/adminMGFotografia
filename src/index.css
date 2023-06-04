@@ -5,10 +5,10 @@
 
 .swiper-button-prev, .swiper-button-next{
     background-color: white ;
-    color: #3b3b3b;
+    color: hsl(0, 0%, 23%);
     padding: 20px;
     border-radius: 100%;
-
+    
 }
 .swiper-button-prev:hover, .swiper-button-next:hover{
     background-color: #3b3b3b  ;
@@ -28,4 +28,16 @@
 }
 .swipper-slide{
     width: 100% !important;
+}
+@media only screen and (max-width:640px)
+{
+    
+    .swiper-button-prev, .swiper-button-next{
+        margin-right: -10px;
+        margin-left: -10px;
+    }
+
+    .swiper-wrapper{
+        padding-left: 0%;
+    }
 }
