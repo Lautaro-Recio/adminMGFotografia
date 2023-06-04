@@ -24,7 +24,7 @@ export default function Module(props) {
       {BooksOnDB.map((book) => {
         return (
           <div
-            className={`block my-2 rounded-md items-center px-2 border-2 border-Gray origin-top duration-700 transition-all w-[90%] ${
+            className={`block my-2 rounded-md items-center px-2 border-2 border-Gray origin-top duration-700 transition-all w-[98%] ${
               WhoMod == book.bookName ? "h-80" : "h-16"
             }`}
             key={book.bookName}

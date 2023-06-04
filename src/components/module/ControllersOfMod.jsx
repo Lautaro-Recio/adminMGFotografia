@@ -10,7 +10,7 @@ export default function ControllersOfMod(props) {
           "opacity-100 flex duration-[2500ms] transition-all mx-2 h-56 "
         );
         setClassOfPics(
-          "opacity-100 flex duration-[2500ms] transition-all mx-2 h-[172px] w-[172px]"
+          "opacity-100 flex duration-[2500ms] transition-all md:mx-2  h-[172px] w-[172px] ml-[20%]"
         );
         setWhoMod(nameOfBook);
       };

@@ -21,7 +21,7 @@ export default function Slider(props) {
           <>
             <SwiperSlide key={img.img.result}>
               <div
-                className={`w-40 h-40 md:mx-2 mx-10 transition-all duration-700  ${
+                className={`w-40 h-40 md:mx-2 mx-[20%] transition-all duration-700  ${
                   WhoMod == book.bookName ? "opacity-100" : "opacity-0"
                 } `}
               >
@@ -43,7 +43,7 @@ export default function Slider(props) {
                         />
                       ));
                   }}
-                  className="w-40 h-40 rounded-md mx-2  absolute opacity-0 top-0 left-0 flex justify-center items-center text-5xl duration-500 transition-all hover:bg-darkRed hover:opacity-100"
+                  className="w-40 h-40 rounded-md md:mx-2 mx-[20%] absolute opacity-0 top-0 left-0 flex justify-center items-center text-5xl duration-500 transition-all hover:bg-darkRed hover:opacity-100"
                 >
                   <ion-icon name="trash-outline"></ion-icon>
                 </button>
@@ -71,7 +71,7 @@ export default function Slider(props) {
             className="w-20 h-20 rounded-md opacity-0"
           />
           <p
-            className={`text-6xl  rounded-md mb-2 w-40 h-40 t-12 flex justify-center items-center border-dashed border-2 bg-Gray border-borderGray absolute hover:bg-menuGray  duration-700 transition-all cursor-pointer`}
+            className={`text-6xl rounded-md mb-2 w-40 h-40 t-12 flex justify-center items-center border-dashed border-2 bg-Gray border-borderGray absolute hover:bg-menuGray  duration-700 transition-all cursor-pointer`}
           >
             +
           </p>
