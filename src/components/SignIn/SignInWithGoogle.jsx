@@ -7,7 +7,7 @@ export default function SignInWithGoogle(props) {
   const SignWhitGoogle = () => {
     signInWithPopup(auth, googleProvider);
     const { email } = auth.currentUser;
-    if (email === import.meta.env.VITE_REACT_APP_EMAIL || import.meta.env.VITE_REACT_APP_EMAIL2 ) {
+    if (email === import.meta.env.VITE_REACT_APP_EMAIL || email === import.meta.env.VITE_REACT_APP_EMAIL2 ) {
       setUserTrue(true);
     }
   };
