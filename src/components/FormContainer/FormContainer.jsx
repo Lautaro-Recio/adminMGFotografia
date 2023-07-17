@@ -6,13 +6,17 @@ import logo from "../../assets/logo.png";
 import NewBook from "../module/NewBook";
 import SignOut from "../SignIn/SignOut";
 import { Toaster, toast } from "react-hot-toast";
-import ButtonsOfForm from "./ButtonsOfForm"
+import ButtonsOfForm from "./ButtonsOfForm";
 export default function FormContainer(props) {
   const { SignOutGoogle } = { ...props };
   const [File, setFile] = useState("");
   const [BooksOnDB, setBooksOnDB] = useState([]);
   const [BooksOnUpload, setBooksOnUpload] = useState("");
   const [addNewBook, setAddNewBook] = useState(false);
+  const [parraf, setParrafsOnUpload] = useState("");
+  const [parrageOrImage, setParragefOrImage] = useState("");
+  const [order, setOrder] = useState(0);
+
   const getData = async () => {
     const dbCollection = await getDocs(collection(db, "books"));
     try {
@@ -31,7 +35,7 @@ export default function FormContainer(props) {
     setFile();
     setBooksOnUpload();
     setAddNewBook();
-    toast.success('Formulario Reseteado')
+    toast.success("Formulario Reseteado");
   };
   useEffect(() => {
     getData();
@@ -40,24 +44,24 @@ export default function FormContainer(props) {
     e.preventDefault();
     try {
       const result = File && (await uploadFile(File));
-      const newDate = new Date()
-      const date = newDate.getDate()
-      const month = newDate.getMonth()
-      const FullYear = newDate.getFullYear()
-      const DateToDB = `${date}/${month}/${FullYear}`
+      const newDate = new Date();
+      const date = newDate.getDate();
+      const month = newDate.getMonth();
+      const FullYear = newDate.getFullYear();
+      const DateToDB = `${date}/${month}/${FullYear}`;
       const img = {
         result,
-        DateToDB
+        DateToDB,
       };
-      !File && (await uploadData(BooksOnUpload));
-      File && (await uploadData(BooksOnUpload, img));
+      !File && (await uploadData(BooksOnUpload, parraf, parrageOrImage, order ));
+      File && (await uploadData(BooksOnUpload, img, parrageOrImage, order));
+
       await getData();
       reset(e);
-      toast.success('Informacion actualizada!')
+      toast.success("Informacion actualizada!");
     } catch (error) {
       console.error(error);
       toast.error("Fallo al subir, intente mas tarde");
-
     }
   };
   return (
@@ -77,16 +81,20 @@ export default function FormContainer(props) {
                 getData={getData}
                 setFile={setFile}
                 setBooksOnUpload={setBooksOnUpload}
+                setParrafsOnUpload={setParrafsOnUpload}
               />
             )}
             <NewBook
+              setParrafsOnUpload={setParrafsOnUpload}
               BooksOnUpload={BooksOnUpload}
               addNewBook={addNewBook}
               setAddNewBook={setAddNewBook}
               setBooksOnUpload={setBooksOnUpload}
+              setParragefOrImage={setParragefOrImage}
+              setOrder={setOrder}
             />
           </div>
-          <ButtonsOfForm handleSubmit={handleSubmit} reset={reset}/>
+          <ButtonsOfForm handleSubmit={handleSubmit} reset={reset} />
         </form>
       </div>
       <Toaster />

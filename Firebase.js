@@ -30,15 +30,22 @@ export const uploadFile = async (file) => {
 
 /* AGREGAR REACT HOT TOAST A LA APLICACION */
 
-export const uploadData = async (book,img) =>{
+export const uploadData = async (book,data, boolean,order) =>{
   const myRef = doc(db,"books",book)
   await getDoc(myRef).then(docSnap=>{
       if (docSnap.exists()) {
         updateDoc(myRef, {
-          book: arrayUnion({img})         
+          book: arrayUnion({img:data})         
         });
       } else {
-        setDoc(myRef,{book:[]})
+        console.log(order)
+        if(boolean){
+
+          setDoc(myRef,{parraf:data,book:[],order})
+        } else{
+          setDoc(myRef,{book:[],order})
+
+        }
       }
     })
 }

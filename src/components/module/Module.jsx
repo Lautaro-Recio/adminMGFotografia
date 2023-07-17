@@ -1,46 +1,97 @@
 import { useState } from "react";
-import ControllersOfMod from "./ControllersOfMod"
+import ControllersOfMod from "./ControllersOfMod";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css";
 import SwiperMod from "./SwiperMod";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../Firebase";
 export default function Module(props) {
   const { BooksOnDB, getData, setFile, setBooksOnUpload } = { ...props };
   const [classOfPics, setClassOfPics] = useState("opacity-0 hidden");
   const [classOfContainer, setClassOfContainer] = useState("opacity-0 hidden");
+  const [parraf, setParraf] = useState("");
 
   const [WhoMod, setWhoMod] = useState("");
-  
 
+  console.log(BooksOnDB);
+  BooksOnDB.sort((a, b) => {
+    if (a.imgs.order > b.imgs.order) {
+      return 1;
+    }
+    if (a.imgs.order < b.imgs.order) {
+      return -1;
+    }
+  });
   const setImageAndBook = (img, book) => {
     setFile(img);
     setBooksOnUpload(book);
   };
+  const updateParraf = async (book, e) => {
+    e.preventDefault();
+    const myRef = doc(db, "books", book);
+    await updateDoc(myRef, {
+      parraf,
+    });
+    setParraf("")
+  };
 
   return (
     <>
-      {/* TERMINAR LA INTERGRACION DEL SLIDER*/}
-
       {BooksOnDB.map((book) => {
         return (
           <div
             className={`block my-2 rounded-md items-center px-2 border-2 border-Gray origin-top duration-700 transition-all w-[98%] ${
-              WhoMod == book.bookName ? "h-80" : "h-16"
+              WhoMod !== book.bookName
+                ? "h-16"
+                : book.imgs.order != 0
+                ? "h-96"
+                : "h-86"
             }`}
             key={book.bookName}
           >
-            {/* book, setWhoMod,setClassOfContainer,setClassOfPics,getData */}
-            <ControllersOfMod book={book} WhoMod={WhoMod} setWhoMod={setWhoMod} setClassOfContainer={setClassOfContainer} setClassOfPics={setClassOfPics} getData={getData}/>
-
+            <ControllersOfMod
+              book={book}
+              WhoMod={WhoMod}
+              setWhoMod={setWhoMod}
+              setClassOfContainer={setClassOfContainer}
+              setClassOfPics={setClassOfPics}
+              getData={getData}
+              order={book.imgs.order}
+            />
             {WhoMod == book.bookName && (
-              <SwiperMod
-                WhoMod={WhoMod}
-                book={book}
-                classOfContainer={classOfContainer}
-                getData={getData}
-                classOfPics={classOfPics}
-                setImageAndBook={setImageAndBook}
-              />
+              <>
+                <SwiperMod
+                  WhoMod={WhoMod}
+                  book={book}
+                  classOfContainer={classOfContainer}
+                  getData={getData}
+                  classOfPics={classOfPics}
+                  setImageAndBook={setImageAndBook}
+                />
+                {book.imgs.order != 0 && (
+                  <>
+                    <p className="p-2">Parrafo</p>
+                    <div className="flex gap-2">
+                      <textarea
+                        className="text-black w-full max-h-20 p-2 rounded-md"
+                        placeholder={`Texto en sistema: ${book.imgs.parraf}`}
+                        onChange={(e) => {
+                          setParraf(e.target.value);
+                        }}
+                      />
+                      <button
+                        className="border-gray-500 border-2 rounded-md hover:bg-white transition-all duration-500 text-gray-500"
+                        onClick={(e) => {
+                          updateParraf(book.bookName, e);
+                        }}
+                      >
+                        Cambiar parrafo
+                      </button>
+                    </div>
+                  </>
+                )}
+              </>
             )}
           </div>
         );
