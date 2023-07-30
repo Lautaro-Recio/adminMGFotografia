@@ -6,7 +6,6 @@ import logo from "../../assets/logo.png";
 import NewBook from "../module/NewBook";
 import SignOut from "../SignIn/SignOut";
 import { Toaster, toast } from "react-hot-toast";
-import ButtonsOfForm from "./ButtonsOfForm";
 export default function FormContainer(props) {
   const { SignOutGoogle } = { ...props };
   const [File, setFile] = useState("");
@@ -37,25 +36,41 @@ export default function FormContainer(props) {
     setAddNewBook();
     toast.success("Formulario Reseteado");
   };
+
   useEffect(() => {
     getData();
   }, []);
+
+  const imgFile = async (file) => {
+    const result = file && (await uploadFile(file));
+    const newDate = new Date();
+    const date = newDate.getDate();
+    const month = newDate.getMonth();
+    const FullYear = newDate.getFullYear();
+    const DateToDB = `${date}/${month}/${FullYear}`;
+    const position = ""
+    const nameOfImg = ""
+    const img = {
+      result,
+      DateToDB,
+      position,
+      nameOfImg,
+    };
+    !file && (await uploadData(BooksOnUpload, parraf, parrageOrImage, order));
+    file && (await uploadData(BooksOnUpload, img, parrageOrImage, order));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const result = File && (await uploadFile(File));
-      const newDate = new Date();
-      const date = newDate.getDate();
-      const month = newDate.getMonth();
-      const FullYear = newDate.getFullYear();
-      const DateToDB = `${date}/${month}/${FullYear}`;
-      const img = {
-        result,
-        DateToDB,
-      };
-      !File && (await uploadData(BooksOnUpload, parraf, parrageOrImage, order ));
-      File && (await uploadData(BooksOnUpload, img, parrageOrImage, order));
 
+    try {
+      if (File.length > 1) {
+        for (let i = 0; i < File.length; i++) {
+          imgFile(File[i]);
+        }
+      } else {
+        imgFile(File[0]);
+      }
       await getData();
       reset(e);
       toast.success("Informacion actualizada!");
@@ -82,6 +97,8 @@ export default function FormContainer(props) {
                 setFile={setFile}
                 setBooksOnUpload={setBooksOnUpload}
                 setParrafsOnUpload={setParrafsOnUpload}
+                handleSubmit={handleSubmit}
+                reset={reset}
               />
             )}
             <NewBook
@@ -92,9 +109,10 @@ export default function FormContainer(props) {
               setBooksOnUpload={setBooksOnUpload}
               setParragefOrImage={setParragefOrImage}
               setOrder={setOrder}
+              handleSubmit={handleSubmit}
+              reset={reset}
             />
           </div>
-          <ButtonsOfForm handleSubmit={handleSubmit} reset={reset} />
         </form>
       </div>
       <Toaster />

@@ -28,7 +28,6 @@ export const uploadFile = async (file) => {
     return url
 }
 
-/* AGREGAR REACT HOT TOAST A LA APLICACION */
 
 export const uploadData = async (book,data, boolean,order) =>{
   const myRef = doc(db,"books",book)

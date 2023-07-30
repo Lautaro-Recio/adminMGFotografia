@@ -7,6 +7,11 @@ export default function SwiperMod(props) {
     classOfPics,
     setImageAndBook,
     getData,
+    handleSubmit,
+    reset,
+    setPosition,
+    setNameOfImg,
+    updateData
   } = { ...props };
   return (
     <>
@@ -23,6 +28,11 @@ export default function SwiperMod(props) {
           getData={getData}
           setImageAndBook={setImageAndBook}
           classOfPics={classOfPics}
+          handleSubmit={handleSubmit}
+          reset={reset}
+          setPosition={setPosition}
+          setNameOfImg={setNameOfImg}
+          updateData={updateData}
         />
       </div>
     </>

@@ -15,7 +15,7 @@ export default function ControllersOfMod(props) {
     e.preventDefault();
     getData();
     setClassOfContainer(
-      "opacity-100 flex duration-[2500ms] transition-all mx-2 h-44 "
+      "opacity-100 flex duration-[2500ms] transition-all mx-2 h-96 "
     );
     setClassOfPics(
       "opacity-100 flex duration-[2500ms] transition-all md:mx-2  h-[172px] w-[172px] ml-[20%]"

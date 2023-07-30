@@ -1,3 +1,5 @@
+import ButtonsOfForm from "../FormContainer/ButtonsOfForm";
+
 export default function NewBook(props) {
   const {
     BooksOnUpload,
@@ -6,7 +8,9 @@ export default function NewBook(props) {
     setBooksOnUpload,
     setParrafsOnUpload,
     setParragefOrImage,
-    setOrder
+    setOrder,
+    handleSubmit,
+    reset,
   } = {
     ...props,
   };
@@ -27,40 +31,44 @@ export default function NewBook(props) {
         />
       </div>
       {addNewBook && (
-        <div className="flex gap-4 w-full">
-          <label htmlFor="w-1/4 block">
-            <p>Nombre nuevo Book</p>
-            <input
-              className="rounded-md ml-2 text-black p-2"
-              type="text"
-              onChange={(e) => {
-                setBooksOnUpload(e.target.value);
-                setParragefOrImage(false)
-              }}
-            />
-          </label>
-          <label className="w-3/4 justify-center items-center" htmlFor="">
-            <p>Parrafo del book</p>
-            <textarea
-              className="rounded-md max-h-16   ml-2 w-full  text-black p-2"
-              type="text-area"
-              onChange={(e) => {
-                setParrafsOnUpload(e.target.value);
-                setParragefOrImage(true)
-              }}
-            />
-          </label>
-          <label className="w-16 justify-center items-center" htmlFor="">
-            <p>Orden</p>
-            <input
-              className="rounded-md  ml-2 w-full  text-black p-2"
-              type="number"
-              min={1}
-              onChange={(e) => {
-                setOrder(e.target.value)
-              }}
-            />
-          </label>
+        <div>
+          <div className="flex gap-4 w-full">
+            <label htmlFor="w-1/4 block">
+              <p>Nombre nuevo Book</p>
+              <input
+                className="rounded-md ml-2 text-black p-2"
+                type="text"
+                onChange={(e) => {
+                  setBooksOnUpload(e.target.value);
+                  setParragefOrImage(false);
+                }}
+              />
+            </label>
+            <label className="w-3/4 justify-center items-center" htmlFor="">
+              <p>Parrafo del book</p>
+              <textarea
+                className="rounded-md max-h-16   ml-2 w-full  text-black p-2"
+                type="text-area"
+                onChange={(e) => {
+                  setParrafsOnUpload(e.target.value);
+                  setParragefOrImage(true);
+                }}
+              />
+            </label>
+            <label className="w-16 justify-center items-center" htmlFor="">
+              <p>Orden</p>
+              <input
+                className="rounded-md  ml-2 w-full  text-black p-2"
+                type="number"
+                min={1}
+                onChange={(e) => {
+                  setOrder(e.target.value);
+                }}
+              />
+            </label>
+          </div>
+
+          <ButtonsOfForm handleSubmit={handleSubmit} reset={reset} />
         </div>
       )}
     </>
