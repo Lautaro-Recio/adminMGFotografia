@@ -35,6 +35,9 @@ export default function Slider(props) {
       };
     }
   };
+  const bodyChange = document.querySelector("#body");
+
+/* SOLUCIONAR LO DEL SCROLL */
 
   const uploadName = async (e, book, nameOfImg, i) => {
     e.preventDefault();
@@ -102,7 +105,7 @@ export default function Slider(props) {
             <>
               <SwiperSlide key={img.img.result}>
                 <div
-                  className={`w-64 h-80 bg-gray-400 md:mx-2 mx-[20%] transition-all duration-700   ${
+                  className={`w-64 h-80 bg-gray-400 mx-2  transition-all duration-700   ${
                     WhoMod == book.bookName ? "opacity-100" : "opacity-0"
                   } `}
                 >
@@ -180,6 +183,8 @@ export default function Slider(props) {
               onClick={(e) => {
                 e.preventDefault();
                 SetNewPicture(true);
+                window.scroll(0, 0);
+                bodyChange.classList.add("overflow-hidden");
               }}
               className="rounded-md  text-6xl  mb-2 w-64 h-80 t-12 flex justify-center items-center border-dashed border-2 bg-Gray border-borderGray absolute hover:bg-menuGray  duration-700 transition-all cursor-pointer"
             >
@@ -195,8 +200,10 @@ export default function Slider(props) {
               onClick={(e) => {
                 e.preventDefault();
                 SetNewPicture(false);
-                reset(e)
-                SetImgPreview([])
+                reset(e);
+                SetImgPreview([]);
+                bodyChange.classList.remove("overflow-hidden");
+
               }}
               className="rounded-md  text-xl  mb-2 w-6 h-6 t-12 flex ml-[97%] mt-4 justify-center items-center border-2 bg-Gray border-borderGray  hover:bg-menuGray  duration-700 transition-all cursor-pointer"
             >
@@ -229,20 +236,34 @@ export default function Slider(props) {
                   SetImgPreview={SetImgPreview}
                 />
               </div>
-              <div className="w-2/3 grid grid-cols-3 gap-2 justify-center items-center">
-                {imgPreview.map((img) => {
-                  return (
-                    <>
-                      <div className="bg-gray-300 rounded ">
-                        <img
-                          className="h-auto w-auto rounded-md"
-                          src={img}
-                          alt=""
-                        />
-                      </div>
-                    </>
-                  );
-                })}
+              <div className="w-2/3 gap-2 h-auto justify-center items-center">
+                <Swiper
+                  key={book.bookName}
+                  modules={[Navigation, Pagination]}
+                  spaceBetween={50}
+                  navigation
+                  slidesPerView={
+                    window.screen.width <= 640
+                      ? 1
+                      : book.imgs.book.length <= 2
+                      ? book.imgs.book.length + 1
+                      : 2
+                  }
+                >
+                  {imgPreview.map((img) => {
+                    return (
+                      <>
+                        <SwiperSlide>
+                          <img
+                            className="h-auto w-auto   rounded-md"
+                            src={img}
+                            alt=""
+                          />
+                        </SwiperSlide>
+                      </>
+                    );
+                  })}
+                </Swiper>
               </div>
             </div>
           </div>

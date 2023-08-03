@@ -18,7 +18,7 @@ export default function ControllersOfMod(props) {
       "opacity-100 flex duration-[2500ms] transition-all mx-2 h-96 "
     );
     setClassOfPics(
-      "opacity-100 flex duration-[2500ms] transition-all md:mx-2  h-[172px] w-[172px] ml-[20%]"
+      "opacity-100 flex duration-[2500ms] transition-all md:mx-2  h-[172px] w-[172px] "
     );
     setWhoMod(nameOfBook);
   };
@@ -32,7 +32,7 @@ export default function ControllersOfMod(props) {
     <div className="flex items-center justify-between my-2 mx-4">
       <div className="flex justify-center items-center">
         {order != 0 && <p className="text-3xl pb-2 mr-4">{order + ")"} </p>}
-        <h3 className="text-white mr-2 text-2xl">{book.bookName}</h3>
+        <h3 className="text-white mr-2 text-s md:text-2xl">{book.bookName}</h3>
         {WhoMod === book.bookName ? (
           <button
             onClick={(e) => closeModule(e)}
@@ -51,7 +51,7 @@ export default function ControllersOfMod(props) {
       </div>
       {order != 0 && (
         <button className="text-3xl justify-center items-center flex hover:text-darkRed transition mx-4 group hover:bg-Gray p-2 rounded-md  cursor-default">
-          <ion-icon aria-hidden="favorte" name="trash-outline"></ion-icon>
+          <ion-icon aria-hidden="none" name="trash-outline"></ion-icon>
           <p
             className=" cursor-pointer text-sm opacity-0 group-hover:opacity-100 mx-2 "
             onClick={(e) => {

@@ -82,7 +82,7 @@ export default function Module(props) {
                     <p className="p-2">Parrafo</p>
                     <div className="flex gap-2">
                       <textarea
-                        className="text-black w-full max-h-20 p-2 rounded-md"
+                        className="text-black md:text-base text-sm w-full max-h-20 p-2 rounded-md"
                         placeholder={`Texto en sistema: ${book.imgs.parraf}`}
                         onChange={(e) => {
                           setParraf(e.target.value);

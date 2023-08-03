@@ -11,7 +11,7 @@ export default function RenderComponents() {
   };
 
   return (
-    <div className="font-serif">
+    <div id="body" className="font-serif">
       {UserTrue ? (
         <FormContainer SignOutGoogle={SignOutGoogle} />
       ) : (
