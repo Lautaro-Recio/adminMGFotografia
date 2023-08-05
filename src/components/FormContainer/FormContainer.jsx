@@ -49,12 +49,13 @@ export default function FormContainer(props) {
     const FullYear = newDate.getFullYear();
     const DateToDB = `${date}/${month}/${FullYear}`;
     const position = ""
-    const nameOfImg = ""
+    
+    console.log(file.name)
     const img = {
       result,
       DateToDB,
       position,
-      nameOfImg,
+      nameOfImg: file.name
     };
     console.log(file)
     !file && (await uploadData(BooksOnUpload, parraf, parrageOrImage, order));

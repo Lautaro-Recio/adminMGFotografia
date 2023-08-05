@@ -61,8 +61,4 @@ export const deleteBook = async (book) =>{
 
   await deleteDoc(doc(db,"books",book))
 }
-/* 
-1-Funcionalidad para que pueda eliminar imgs o books
-  1A-Funcion para que cuando toque el signo mas le figure a que book sumar la foto
-2-Mejorar la estetica
-  */
+

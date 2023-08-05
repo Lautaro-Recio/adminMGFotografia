@@ -26,10 +26,9 @@ export default function Module(props) {
       return -1;
     }
   });
-  const setImageAndBook = (img, book, length) => {
+  const setImageAndBook = (img, book) => {
     setBooksOnUpload(book);
     setFile(img);
-    console.log(img - length);
   };
   const viewConfiguration = async (bookName, value, configuration) => {
     /* SI CAMBIA EL ESTADO EN FIREBASE // FALTA QUE CAMBIE DE MANERA LOCAL Y PREGUNTAR SI QUIERE EFECTUAR LOS CAMBIOS */
@@ -139,4 +138,3 @@ export default function Module(props) {
     </>
   );
 }
-/* FUNCIONALIDAD TERMINADA // FALTA TERMINAR DISELO Y COMPONETIZAR */
