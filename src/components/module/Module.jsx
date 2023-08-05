@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css";
 import SwiperMod from "./SwiperMod";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../Firebase";
 export default function Module(props) {
   const { BooksOnDB, getData, setFile, setBooksOnUpload, handleSubmit, reset } =
@@ -12,8 +12,11 @@ export default function Module(props) {
   const [classOfPics, setClassOfPics] = useState("opacity-0 hidden");
   const [classOfContainer, setClassOfContainer] = useState("opacity-0 hidden");
   const [parraf, setParraf] = useState("");
-  
+
   const [WhoMod, setWhoMod] = useState("");
+  const [header, setHeader] = useState("");
+  const [presentation1, setPresentation1] = useState("");
+  const [presentation2, setPresentation2] = useState("");
 
   BooksOnDB.sort((a, b) => {
     if (a.imgs.order > b.imgs.order) {
@@ -28,7 +31,32 @@ export default function Module(props) {
     setFile(img);
     console.log(img - length);
   };
- 
+  const viewConfiguration = async (bookName, value, configuration) => {
+    /* SI CAMBIA EL ESTADO EN FIREBASE // FALTA QUE CAMBIE DE MANERA LOCAL Y PREGUNTAR SI QUIERE EFECTUAR LOS CAMBIOS */
+    const myRef = doc(db, "books", bookName);
+    const actualizacion = await getDoc(myRef);
+    setHeader(actualizacion.data().header);
+    setPresentation1(actualizacion.data().presentation1);
+    setPresentation2(actualizacion.data().presentation2);
+
+    if (configuration === "header") {
+      setHeader(value);
+      await updateDoc(myRef, {
+        header: value,
+      });
+    } else if (configuration === "presentation1") {
+      setPresentation1(value);
+      await updateDoc(myRef, {
+        presentation1: value,
+      });
+    } else {
+      setPresentation2(value);
+      await updateDoc(myRef, {
+        presentation2: value,
+      });
+    }
+  };
+
   /* TERMINAR ESTETICA Y FUNCIONALIDAD DE: SELECCIONAR CUAL ES LA FOTO PARA EL HEADER DE LA SECCION DE PHOTOSHOW Y LAS 2 IMAGENES QUE SE MUESTRAN EN LA SECCION DE LOS BOOKS */
 
   const updateData = async (book, e) => {
@@ -50,7 +78,7 @@ export default function Module(props) {
               WhoMod !== book.bookName
                 ? "h-16"
                 : book.imgs.order != 0
-                ? "h-[36rem]"
+                ? "h-[40rem]"
                 : "h-86"
             }`}
             key={book.bookName}
@@ -63,6 +91,7 @@ export default function Module(props) {
               setClassOfPics={setClassOfPics}
               getData={getData}
               order={book.imgs.order}
+              viewConfiguration={viewConfiguration}
             />
             {WhoMod == book.bookName && (
               <>
@@ -75,7 +104,10 @@ export default function Module(props) {
                   setImageAndBook={setImageAndBook}
                   handleSubmit={handleSubmit}
                   reset={reset}
-                  
+                  viewConfiguration={viewConfiguration}
+                  header={header}
+                  presentation1={presentation1}
+                  presentation2={presentation2}
                 />
                 {book.imgs.order != 0 && (
                   <>
@@ -107,3 +139,4 @@ export default function Module(props) {
     </>
   );
 }
+/* FUNCIONALIDAD TERMINADA // FALTA TERMINAR DISELO Y COMPONETIZAR */

@@ -10,12 +10,14 @@ export default function ControllersOfMod(props) {
     setClassOfPics,
     getData,
     order,
+    viewConfiguration,
   } = { ...props };
   const openModule = (e, nameOfBook) => {
     e.preventDefault();
+    viewConfiguration(book.bookName, "", "presentation2");
     getData();
     setClassOfContainer(
-      "opacity-100 flex duration-[2500ms] transition-all mx-2 h-96 "
+      "opacity-100 flex duration-[2500ms] transition-all mx-2 h-[450px] "
     );
     setClassOfPics(
       "opacity-100 flex duration-[2500ms] transition-all md:mx-2  h-[172px] w-[172px] "

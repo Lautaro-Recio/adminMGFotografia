@@ -8,6 +8,7 @@ import ButtonsOfForm from "../FormContainer/ButtonsOfForm";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../Firebase";
 const posArray = [];
+
 export default function Slider(props) {
   const {
     book,
@@ -17,12 +18,39 @@ export default function Slider(props) {
     setImageAndBook,
     handleSubmit,
     reset,
+    viewConfiguration,
+    header,
+    presentation1,
+    presentation2,
   } = {
     ...props,
   };
+
   const [newPicture, SetNewPicture] = useState(false);
   const [imgPreview, SetImgPreview] = useState([]);
   const [edit, SetEdit] = useState("");
+
+  const viewPositions = (e, bookName, value, x) => {
+    if (posArray.length === 0) {
+      for (let i = 0; i < book.imgs.book.length; i++) {
+        posArray.push(book.imgs.book[i].img.position);
+      }
+    }
+    for (let i = 0; i < posArray.length; i++) {
+      if (value <= 0 && i === x)
+        toast.error("Las posiciones tinen que ser mayores a 0");
+      else if (posArray.some((e) => e === value && i === x))
+        toast.error("Posicion ya asignada");
+      else if (value === "" && i === x)
+        toast.error("Debes ingresar una posicion");
+      else if (i == x) {
+        posArray[i] = value;
+        uploadPosition(e, bookName, value, x);
+        toast.success("Posicion actualizada con exito");
+      }
+    }
+  };
+
   const preview = (file) => {
     const previewArray = [];
     for (let i = 0; i < file.length; i++) {
@@ -36,8 +64,6 @@ export default function Slider(props) {
     }
   };
   const bodyChange = document.querySelector("#body");
-
-/* SOLUCIONAR LO DEL SCROLL */
 
   const uploadName = async (e, book, nameOfImg, i) => {
     e.preventDefault();
@@ -63,27 +89,6 @@ export default function Slider(props) {
     });
   };
 
-  const viewPositions = (e, bookName, value, x) => {
-    if (posArray.length === 0) {
-      for (let i = 0; i < book.imgs.book.length; i++) {
-        posArray.push(book.imgs.book[i].img.position);
-      }
-    }
-    for (let i = 0; i < posArray.length; i++) {
-      if (value <= 0 && i === x)
-        toast.error("Las posiciones tinen que ser mayores a 0");
-      else if (posArray.some((e) => e === value && i === x))
-        toast.error("Posicion ya asignada");
-      else if (value === "" && i === x)
-        toast.error("Debes ingresar una posicion");
-      else if (i == x) {
-        posArray[i] = value;
-        uploadPosition(e, bookName, value, x);
-        toast.success("Posicion actualizada con exito");
-      }
-    }
-  };
-
   return (
     <>
       <Swiper
@@ -105,7 +110,7 @@ export default function Slider(props) {
             <>
               <SwiperSlide key={img.img.result}>
                 <div
-                  className={`w-64 h-80 bg-gray-400 mx-2  transition-all duration-700   ${
+                  className={`w-72 h-auto bg-gray-400 mx-2  transition-all duration-700 rounded-md   ${
                     WhoMod == book.bookName ? "opacity-100" : "opacity-0"
                   } `}
                 >
@@ -120,7 +125,7 @@ export default function Slider(props) {
                   />
                   <div className="relative ">
                     <img
-                      className="w-40 h-40 my-10 rounded-md mx-[20%] border-2 border-borderGray "
+                      className="w-40 h-40 rounded-md mx-[20%] my-4 border-2 border-borderGray "
                       src={img.img.result}
                       alt={img.result}
                     />
@@ -161,11 +166,100 @@ export default function Slider(props) {
                         <ion-icon name="create-outline"></ion-icon>
                       </button>
                     )}
+                    <div className="grid gap-1 p-2">
+                      <label
+                        htmlFor=""
+                        className=" flex gap-2 justify-start items-center  "
+                      >
+                        <p className="ml-2 p-2 rounded-md">Header</p>
+                        <button
+                          className={`text-2xl bg-white h-6 w-6  rounded-sm ${
+                            header === img.img.result
+                              ? "text-green-500"
+                              : "text-red-500"
+                          }`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            viewConfiguration(
+                              book.bookName,
+                              img.img.result,
+                              "header"
+                            );
+                          }}
+                        >
+                          {header === img.img.result ? (
+                            <ion-icon name="checkmark-outline"></ion-icon>
+                          ) : (
+                            <ion-icon name="close-outline"></ion-icon>
+                          )}
+                        </button>
+                      </label>
+
+                      <label
+                        htmlFor=""
+                        className=" flex gap-2 justify-start items-center  "
+                      >
+                        <p className="ml-2 p-2 rounded-md">
+                          Img de presentacion 1
+                        </p>
+                        <button
+                          className={`text-2xl bg-white h-6 w-6  rounded-sm ${
+                            presentation1 === img.img.result
+                              ? "text-green-500"
+                              : "text-red-500"
+                          }`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            viewConfiguration(
+                              book.bookName,
+                              img.img.result,
+                              "presentation1"
+                            );
+                          }}
+                        >
+                          {presentation1 === img.img.result ? (
+                            <ion-icon name="checkmark-outline"></ion-icon>
+                          ) : (
+                            <ion-icon name="close-outline"></ion-icon>
+                          )}
+                        </button>
+                      </label>
+
+                      <label
+                        htmlFor=""
+                        className=" flex gap-2 justify-start items-center  "
+                      >
+                        <p className="ml-2 p-2 rounded-md">
+                          Img de presentacion 2
+                        </p>
+                        <button
+                          className={`text-2xl bg-white h-6 w-6  rounded-sm ${
+                            presentation2 === img.img.result
+                              ? "text-green-500"
+                              : "text-red-500"
+                          }`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            viewConfiguration(
+                              book.bookName,
+                              img.img.result,
+                              "presentation2"
+                            );
+                          }}
+                        >
+                          {presentation2 === img.img.result ? (
+                            <ion-icon name="checkmark-outline"></ion-icon>
+                          ) : (
+                            <ion-icon name="close-outline"></ion-icon>
+                          )}
+                        </button>
+                      </label>
+                    </div>
                     <input
                       placeholder={`Posicion: ${img.img.position} `}
                       type="number"
                       disabled={img.img.result === edit ? false : true}
-                      className="mx-2 my-[2px] w-[93%] rounded-md p-[1px] text-black"
+                      className="mx-2 my-[5px] w-[93%] rounded-md p-[1px] text-black"
                       min={1}
                       onChange={(e) => {
                         viewPositions(e, book.bookName, e.target.value, i);
@@ -203,7 +297,6 @@ export default function Slider(props) {
                 reset(e);
                 SetImgPreview([]);
                 bodyChange.classList.remove("overflow-hidden");
-
               }}
               className="rounded-md  text-xl  mb-2 w-6 h-6 t-12 flex ml-[97%] mt-4 justify-center items-center border-2 bg-Gray border-borderGray  hover:bg-menuGray  duration-700 transition-all cursor-pointer"
             >

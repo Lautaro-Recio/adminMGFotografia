@@ -40,7 +40,7 @@ export const uploadData = async (book,data, boolean,order) =>{
         console.log(order)
         if(boolean){
 
-          setDoc(myRef,{parraf:data,book:[],order})
+          setDoc(myRef,{parraf:data,header:"",presentation1:"",presentation2:"",book:[],order})
         } else{
           setDoc(myRef,{book:[],order})
 

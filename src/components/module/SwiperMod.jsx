@@ -11,7 +11,11 @@ export default function SwiperMod(props) {
     reset,
     setPosition,
     setNameOfImg,
-    updateData
+    updateData,
+    viewConfiguration,
+    header,
+    presentation1,
+    presentation2,
   } = { ...props };
   return (
     <>
@@ -33,6 +37,10 @@ export default function SwiperMod(props) {
           setPosition={setPosition}
           setNameOfImg={setNameOfImg}
           updateData={updateData}
+          viewConfiguration={viewConfiguration}
+          presentation1={presentation1}
+          presentation2={presentation2}
+          header={header}
         />
       </div>
     </>

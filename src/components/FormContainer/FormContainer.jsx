@@ -56,20 +56,24 @@ export default function FormContainer(props) {
       position,
       nameOfImg,
     };
+    console.log(file)
     !file && (await uploadData(BooksOnUpload, parraf, parrageOrImage, order));
     file && (await uploadData(BooksOnUpload, img, parrageOrImage, order));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(File)
 
     try {
-      if (File.length > 1) {
+      
+      if (File == undefined) {
+        imgFile(undefined);
+
+      } else {
         for (let i = 0; i < File.length; i++) {
           imgFile(File[i]);
         }
-      } else {
-        imgFile(File[0]);
       }
       await getData();
       reset(e);
