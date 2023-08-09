@@ -78,12 +78,7 @@ export default function Slider(props) {
     });
   };
 
-  const slidesPerView = (book) => {
-    if (window.screen.width <= 640) return 1;
-    else if (window.screen.width <= 1100) return 2;
-    else if (book.imgs.book.length <= 2) return 2;
-    else return 3;
-  };
+
 
   return (
     <>
@@ -93,26 +88,17 @@ export default function Slider(props) {
         spaceBetween={20}
         navigation
         pagination={{ clickable: true }}
-        slidesPerView={slidesPerView(book)}
+        slidesPerView={1}
       >
         {book.imgs.book.map((img, i) => {
           return (
             <>
               <SwiperSlide key={img.img.result}>
                 <div
-                  className={`w-72 h-auto bg-gray-400 mx-2  transition-all duration-700 rounded-md   ${
+                  className={`w-auto h-full bg-gray-400 mx-2  transition-all duration-700 rounded-md   ${
                     WhoMod == book.bookName ? "opacity-100" : "opacity-0"
                   } `}
                 >
-                  <input
-                    placeholder={`Nombre img: ${img.img.nameOfImg} `}
-                    type="text"
-                    disabled={img.img.result === edit ? false : true}
-                    className="m-2 w-[93%] rounded-md p-[1px] text-black"
-                    onChange={(e) => {
-                      uploadName(e, book.bookName, e.target.value, i);
-                    }}
-                  />
                   <ImgOfModule
                     book={book}
                     getData={getData}
@@ -125,6 +111,7 @@ export default function Slider(props) {
                     SetEdit={SetEdit}
                     viewPositions={viewPositions}
                     i={i}
+                    uploadName={uploadName}
                   />
                 </div>
               </SwiperSlide>

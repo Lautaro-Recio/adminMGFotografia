@@ -13,8 +13,9 @@ export default {
         'borderGray': '#ffffff42',
         'darkRed': '#ff00007d',
         'yellowButton': '#ffc80094',
-        'save': '#0089ff85',
-
+        'save': '#11b91194',
+        'expand': '#0089ff85',
+        "disabled" : "#b5bac2"
       },
       
       backgroundImage: {
