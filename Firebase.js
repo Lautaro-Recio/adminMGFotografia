@@ -37,7 +37,6 @@ export const uploadData = async (book,data, boolean,order) =>{
           book: arrayUnion({img:data})         
         });
       } else {
-        console.log(order)
         if(boolean){
 
           setDoc(myRef,{parraf:data,header:"",presentation1:"",presentation2:"",book:[],order})

@@ -4,7 +4,7 @@
 
 
 .swiper-button-prev, .swiper-button-next{
-    background-color: white ;
+    background-color: pink ;
     color: hsl(0, 0%, 23%);
     padding: 20px;
     border-radius: 100%;
@@ -23,9 +23,7 @@
 .swiper-pagination{
     bottom: 0px !important;
 }
-.swiper-wrapper{
-    padding-left: 5%;
-}
+
 .swipper-slide{
     width: 100% !important;
 }

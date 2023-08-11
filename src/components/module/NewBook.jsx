@@ -11,6 +11,8 @@ export default function NewBook(props) {
     setOrder,
     handleSubmit,
     reset,
+    dis,
+    comprobe
   } = {
     ...props,
   };
@@ -32,7 +34,7 @@ export default function NewBook(props) {
       </div>
       {addNewBook && (
         <div>
-          <div className="flex gap-4 w-full">
+          <div className="md:flex gap-4 w-full">
             <label htmlFor="w-1/4 block">
               <p>Nombre nuevo Book</p>
               <input
@@ -41,6 +43,7 @@ export default function NewBook(props) {
                 onChange={(e) => {
                   setBooksOnUpload(e.target.value);
                   setParragefOrImage(false);
+                  comprobe()
                 }}
               />
             </label>
@@ -52,6 +55,7 @@ export default function NewBook(props) {
                 onChange={(e) => {
                   setParrafsOnUpload(e.target.value);
                   setParragefOrImage(true);
+                  comprobe()
                 }}
               />
             </label>
@@ -63,12 +67,13 @@ export default function NewBook(props) {
                 min={1}
                 onChange={(e) => {
                   setOrder(e.target.value);
+                  comprobe()
                 }}
               />
             </label>
           </div>
 
-          <ButtonsOfForm handleSubmit={handleSubmit} reset={reset} />
+          <ButtonsOfForm dis={dis} handleSubmit={handleSubmit} reset={reset} />
         </div>
       )}
     </>

@@ -7,15 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        'menuGray': '#222222c4',
-        'formGray': '#bdb6b6',
-        'Gray': '#999898',
-        'borderGray': '#ffffff42',
+        'menuGray': '#ffffff',
+        'formGray': '#fdc1c1',
+        'Gray': '#ffffff',
+        'borderGray': '#ffffff',
         'darkRed': '#ff00007d',
         'yellowButton': '#ffc80094',
         'save': '#11b91194',
         'expand': '#0089ff85',
-        "disabled" : "#b5bac2"
+        "disabled" : "#enabled"
+        
       },
       
       backgroundImage: {

@@ -6,6 +6,7 @@ import "swiper/css";
 import SwiperMod from "./SwiperMod";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../Firebase";
+import Parraf from "./componentsOfSlider/Parraf";
 export default function Module(props) {
   const { BooksOnDB, getData, setFile, setBooksOnUpload, handleSubmit, reset } =
     { ...props };
@@ -56,15 +57,12 @@ export default function Module(props) {
     }
   };
 
-  /* TERMINAR ESTETICA Y FUNCIONALIDAD DE: SELECCIONAR CUAL ES LA FOTO PARA EL HEADER DE LA SECCION DE PHOTOSHOW Y LAS 2 IMAGENES QUE SE MUESTRAN EN LA SECCION DE LOS BOOKS */
-
   const updateData = async (book, e) => {
     e.preventDefault();
     const myRef = doc(db, "books", book);
     await updateDoc(myRef, {
       parraf,
     });
-
     setParraf("");
   };
 
@@ -109,26 +107,11 @@ export default function Module(props) {
                   presentation2={presentation2}
                 />
                 {book.imgs.order != 0 && (
-                  <>
-                    <p className="p-2">Parrafo</p>
-                    <div className="flex gap-2">
-                      <textarea
-                        className="text-black md:text-base text-sm w-full max-h-20 p-2 rounded-md"
-                        placeholder={`Texto en sistema: ${book.imgs.parraf}`}
-                        onChange={(e) => {
-                          setParraf(e.target.value);
-                        }}
-                      />
-                      <button
-                        className="border-gray-500 border-2 rounded-md hover:bg-white transition-all duration-500 text-gray-500"
-                        onClick={(e) => {
-                          updateData(book.bookName, e);
-                        }}
-                      >
-                        Subir Parrafo
-                      </button>
-                    </div>
-                  </>
+                  <Parraf
+                    setParraf={setParraf}
+                    book={book}
+                    updateData={updateData}
+                  />
                 )}
               </>
             )}

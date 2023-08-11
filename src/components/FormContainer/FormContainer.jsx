@@ -16,6 +16,12 @@ export default function FormContainer(props) {
   const [parrageOrImage, setParragefOrImage] = useState("");
   const [order, setOrder] = useState(0);
 
+  const [dis, setDis] = useState(false);
+  const comprobe = () => {
+    if (parrageOrImage && parraf && order) {
+      setDis(true);
+    }
+  };
   const getData = async () => {
     const dbCollection = await getDocs(collection(db, "books"));
     try {
@@ -48,29 +54,23 @@ export default function FormContainer(props) {
     const month = newDate.getMonth();
     const FullYear = newDate.getFullYear();
     const DateToDB = `${date}/${month}/${FullYear}`;
-    const position = ""
-    
-    console.log(file.name)
+    const position = "";
     const img = {
       result,
       DateToDB,
       position,
-      nameOfImg: file.name
+      nameOfImg: file.name,
     };
-    console.log(file)
     !file && (await uploadData(BooksOnUpload, parraf, parrageOrImage, order));
     file && (await uploadData(BooksOnUpload, img, parrageOrImage, order));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(File)
 
     try {
-      
       if (File == undefined) {
         imgFile(undefined);
-
       } else {
         for (let i = 0; i < File.length; i++) {
           imgFile(File[i]);
@@ -116,6 +116,8 @@ export default function FormContainer(props) {
               setOrder={setOrder}
               handleSubmit={handleSubmit}
               reset={reset}
+              dis={dis}
+              comprobe={comprobe}
             />
           </div>
         </form>

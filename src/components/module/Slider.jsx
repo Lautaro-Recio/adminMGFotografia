@@ -25,6 +25,7 @@ export default function Slider(props) {
   } = {
     ...props,
   };
+  const [view, setView] = useState("");
 
   const [newPicture, SetNewPicture] = useState(false);
   const [imgPreview, SetImgPreview] = useState([]);
@@ -60,7 +61,6 @@ export default function Slider(props) {
     await getDoc(myRef).then((docSnap) => {
       const data = docSnap.data();
       data.book[i].img.nameOfImg = nameOfImg;
-      console.log(data);
       setDoc(myRef, {
         ...data,
       });
@@ -78,10 +78,26 @@ export default function Slider(props) {
     });
   };
 
-
-
   return (
     <>
+      {view && (
+        <>
+          <span className="bg-[#676767bd] absolute z-10 w-full h-full top-0 left-0"></span>
+          <div className="h-screen w-full absolute flex justify-center items-center top-0 left-0">
+            <button
+              className="absolute top-8 right-8 text-3xl hover:text-red-500 transition-all z-20"
+              onClick={(e) => {
+                e.preventDefault();
+                setView("");
+                bodyChange.classList.remove("overflow-hidden");
+              }}
+            >
+              X
+            </button>
+            <img src={view} className="z-20 md:h-3/4   " alt="" />
+          </div>
+        </>
+      )}
       <Swiper
         key={book.bookName}
         modules={[Navigation, Pagination]}
@@ -95,7 +111,7 @@ export default function Slider(props) {
             <>
               <SwiperSlide key={img.img.result}>
                 <div
-                  className={`w-auto h-full bg-gray-400 mx-2  transition-all duration-700 rounded-md   ${
+                  className={`w-auto h-full bg-menuGray mx-2  transition-all duration-700 rounded-md   ${
                     WhoMod == book.bookName ? "opacity-100" : "opacity-0"
                   } `}
                 >
@@ -112,6 +128,7 @@ export default function Slider(props) {
                     viewPositions={viewPositions}
                     i={i}
                     uploadName={uploadName}
+                    setView={setView}
                   />
                 </div>
               </SwiperSlide>
@@ -127,7 +144,7 @@ export default function Slider(props) {
                 window.scroll(0, 0);
                 bodyChange.classList.add("overflow-hidden");
               }}
-              className="rounded-md  text-6xl  mb-2 w-64 h-80  t-12 flex justify-center items-center border-dashed border-2 bg-Gray border-borderGray absolute hover:bg-menuGray  duration-700 transition-all cursor-pointer"
+              className="rounded-md  text-6xl  mb-2 md:w-80 md:h-96 h-64 w-48  t-12 flex justify-center items-center border-dashed border-2 bg-pink border-borderGray absolute hover:bg-menuGray  duration-700 transition-all cursor-pointer"
             >
               +
             </button>

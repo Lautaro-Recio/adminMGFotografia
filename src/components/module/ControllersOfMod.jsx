@@ -20,7 +20,7 @@ export default function ControllersOfMod(props) {
       "opacity-100 flex duration-[2500ms] transition-all mx-2 h-[450px] "
     );
     setClassOfPics(
-      "opacity-100 flex duration-[2500ms] transition-all md:mx-2  h-[172px] w-[172px] "
+      "opacity-100 flex duration-[2500ms] w-full h-full justify-center items-center transition-all md:mx-2  "
     );
     setWhoMod(nameOfBook);
   };
@@ -45,7 +45,7 @@ export default function ControllersOfMod(props) {
         ) : (
           <button
             onClick={(e) => openModule(e, book.bookName)}
-            className="flex justify-center items-center w-10 text-3xl h-10 p-2  hover:border-borderGray hover:bg-white rounded-full hover:text-menuGray transition-all"
+            className="flex justify-center items-center w-10 text-3xl h-10 p-2  hover:border-borderGray hover:bg-white rounded-full hover:text-formGray transition-all"
           >
             <ion-icon name="chevron-down-outline"></ion-icon>
           </button>
