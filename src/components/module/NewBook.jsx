@@ -7,12 +7,9 @@ export default function NewBook(props) {
     setAddNewBook,
     setBooksOnUpload,
     setParrafsOnUpload,
-    setParragefOrImage,
     setOrder,
     handleSubmit,
     reset,
-    dis,
-    comprobe
   } = {
     ...props,
   };
@@ -42,8 +39,7 @@ export default function NewBook(props) {
                 type="text"
                 onChange={(e) => {
                   setBooksOnUpload(e.target.value);
-                  setParragefOrImage(false);
-                  comprobe()
+
                 }}
               />
             </label>
@@ -54,8 +50,6 @@ export default function NewBook(props) {
                 type="text-area"
                 onChange={(e) => {
                   setParrafsOnUpload(e.target.value);
-                  setParragefOrImage(true);
-                  comprobe()
                 }}
               />
             </label>
@@ -67,13 +61,13 @@ export default function NewBook(props) {
                 min={1}
                 onChange={(e) => {
                   setOrder(e.target.value);
-                  comprobe()
+                  
                 }}
               />
             </label>
           </div>
 
-          <ButtonsOfForm dis={dis} handleSubmit={handleSubmit} reset={reset} />
+          <ButtonsOfForm handleSubmit={handleSubmit} reset={reset} />
         </div>
       )}
     </>

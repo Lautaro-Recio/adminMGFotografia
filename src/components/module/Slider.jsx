@@ -162,7 +162,7 @@ export default function Slider(props) {
                 SetImgPreview([]);
                 bodyChange.classList.remove("overflow-hidden");
               }}
-              className="rounded-md  text-xl  mb-2 w-6 h-6 t-12 flex ml-[97%] mt-4 justify-center items-center border-2 bg-Gray border-borderGray  hover:bg-menuGray  duration-700 transition-all cursor-pointer"
+              className="rounded-md  text-xl  mb-2 w-6 h-6 t-12 flex ml-[97%] mt-4 justify-center items-center border-2 hover:text-gray-500 border-borderGray  hover:bg-menuGray  duration-700 transition-all cursor-pointer"
             >
               X
             </button>

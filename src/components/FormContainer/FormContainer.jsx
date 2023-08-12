@@ -13,15 +13,8 @@ export default function FormContainer(props) {
   const [BooksOnUpload, setBooksOnUpload] = useState("");
   const [addNewBook, setAddNewBook] = useState(false);
   const [parraf, setParrafsOnUpload] = useState("");
-  const [parrageOrImage, setParragefOrImage] = useState("");
   const [order, setOrder] = useState(0);
 
-  const [dis, setDis] = useState(false);
-  const comprobe = () => {
-    if (parrageOrImage && parraf && order) {
-      setDis(true);
-    }
-  };
   const getData = async () => {
     const dbCollection = await getDocs(collection(db, "books"));
     try {
@@ -37,9 +30,9 @@ export default function FormContainer(props) {
   };
   const reset = (e) => {
     e.preventDefault();
-    setFile();
-    setBooksOnUpload();
-    setAddNewBook();
+    setFile("");
+    setBooksOnUpload("");
+    setAddNewBook(false);
     toast.success("Formulario Reseteado");
   };
 
@@ -47,7 +40,7 @@ export default function FormContainer(props) {
     getData();
   }, []);
 
-  const imgFile = async (file) => {
+  const imgFile = async (file, e) => {
     const result = file && (await uploadFile(file));
     const newDate = new Date();
     const date = newDate.getDate();
@@ -61,22 +54,25 @@ export default function FormContainer(props) {
       position,
       nameOfImg: file.name,
     };
-    !file && (await uploadData(BooksOnUpload, parraf, parrageOrImage, order));
-    file && (await uploadData(BooksOnUpload, img, parrageOrImage, order));
+    console.log(file)
+    file === "undefined" && (await uploadData(BooksOnUpload, parraf, true, order));
+    file && (await uploadData(BooksOnUpload, img, false, order));
+    reset(e);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(File)
 
     try {
-      if (File == undefined) {
-        imgFile(undefined);
+      if (File === "") {
+        imgFile("undefined");
       } else {
         for (let i = 0; i < File.length; i++) {
-          imgFile(File[i]);
+          imgFile(File[i], e);
         }
       }
-      await getData();
+      getData();
       reset(e);
       toast.success("Informacion actualizada!");
     } catch (error) {
@@ -94,7 +90,19 @@ export default function FormContainer(props) {
         <h4 className="text-xl text-white">Formulario subida de imagenes</h4>
         <form className="block ">
           <div className=" my-4 p-2 rounded-md ">
-            <h4 className="text-white ml-6 text-xl">Selecciona un book</h4>
+            <div className="flex justify-between pr-10 text-2xl items-center">
+              <h4 className="text-white ml-6 ">Selecciona un book</h4>
+
+              <button
+                className="text-2xl flex justify-center items-center gap-4 border-2 border-white p-2 rounded-md"
+                onClick={(e) => {
+                  e.preventDefault()
+                  getData();
+                }}
+              >
+                Recargar datos <ion-icon name="refresh-outline"></ion-icon>
+              </button>
+            </div>
             {BooksOnDB.length > 0 && (
               <Module
                 BooksOnDB={BooksOnDB}
@@ -112,12 +120,9 @@ export default function FormContainer(props) {
               addNewBook={addNewBook}
               setAddNewBook={setAddNewBook}
               setBooksOnUpload={setBooksOnUpload}
-              setParragefOrImage={setParragefOrImage}
               setOrder={setOrder}
               handleSubmit={handleSubmit}
               reset={reset}
-              dis={dis}
-              comprobe={comprobe}
             />
           </div>
         </form>

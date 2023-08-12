@@ -21,11 +21,13 @@ export const googleProvider = new GoogleAuthProvider()
 
 //Esta funcion sirve para subir imgs, recibe un archivo y el nombre de la foto
 export const uploadFile = async (file) => {
-    const storageRef = ref(storage, file.name)
-    await uploadBytes(storageRef, file)
-    //getDownloadURL retorna la url que utilizara la img en el storage para verse
-    const url = await getDownloadURL(storageRef)
-    return url
+    if(file !== "undefined"){
+      const storageRef = ref(storage, file.name)
+      await uploadBytes(storageRef, file)
+      //getDownloadURL retorna la url que utilizara la img en el storage para verse
+      const url = await getDownloadURL(storageRef)
+      return url
+    }
 }
 
 

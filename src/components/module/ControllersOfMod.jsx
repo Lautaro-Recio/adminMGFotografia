@@ -20,7 +20,9 @@ export default function ControllersOfMod(props) {
       "opacity-100 flex duration-[2500ms] transition-all mx-2 h-[450px] "
     );
     setClassOfPics(
-      "opacity-100 flex duration-[2500ms] w-full h-full justify-center items-center transition-all md:mx-2  "
+      `opacity-100 flex duration-[2500ms] ${
+        book.imgs.book.length === 0 ? "w-[20rem]" : "w-full"
+      }  h-full justify-center items-center transition-all md:mx-2  `
     );
     setWhoMod(nameOfBook);
   };

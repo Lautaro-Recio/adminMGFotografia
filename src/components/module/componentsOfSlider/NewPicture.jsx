@@ -49,8 +49,9 @@ export default function NewPicture(props) {
           SetImgPreview={SetImgPreview}
         />
       </div>
-      <div className="w-2/3 gap-2 h-auto justify-center items-center">
+      <div className="w-2/3 flex gap-2 h-screen justify-center items-center">
         <Swiper
+          className="max-h-screen mb-4 justify-center items-center"
           key={book.bookName}
           modules={[Navigation, Pagination]}
           spaceBetween={50}
@@ -60,15 +61,16 @@ export default function NewPicture(props) {
               ? 1
               : book.imgs.book.length <= 2
               ? book.imgs.book.length + 1
+              
               : 2
           }
         >
           {imgPreview.map((img) => {
             return (
               <>
-                <SwiperSlide>
+                <SwiperSlide key={img}>
                   <img
-                    className="h-auto w-auto   rounded-md"
+                    className="h-auto w-auto p-10  max-h-screen mb-4 rounded-md"
                     src={img}
                     alt=""
                   />
